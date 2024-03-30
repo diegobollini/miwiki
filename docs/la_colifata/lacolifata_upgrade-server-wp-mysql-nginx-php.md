@@ -1,3 +1,10 @@
+---
+layout: page
+title: La Colifata Server - Restore & Upgrade to Ubuntu 22.04
+# permalink: /creative_code/
+parent: La Colifata
+---
+
 # UPGRADE SO SERVER LA COLIFATA
 
 ## Backup
