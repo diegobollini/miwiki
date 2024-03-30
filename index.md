@@ -1,5 +1,4 @@
 ---
-# title: xxdigital
 layout: home
 ---
 
