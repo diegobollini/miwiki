@@ -5,7 +5,7 @@ permalink: /tuits_random/
 parent: Cosas de Internet
 ---
 
-https://twitter.com/MMLe0/status/1029790015910563840
+https://twitter.com/enzogorlomi_/status/916397167094280192
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I can&#39;t even imagine how high these guys were when they created this masterpiece <a href="https://t.co/8M5njSPJMF">pic.twitter.com/8M5njSPJMF</a></p>&mdash; Mario (@MMLe0) <a href="https://twitter.com/MMLe0/status/1029790015910563840?ref_src=twsrc%5Etfw">August 15, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
