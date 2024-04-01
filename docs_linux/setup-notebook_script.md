@@ -18,7 +18,7 @@ $ chmod +x script_setup.sh
 $ sudo bash script_setup.sh
 ```
 
-## Sript
+## Script
 
 ```bash
 #!/bin/bash

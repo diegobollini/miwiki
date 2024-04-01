@@ -22,7 +22,7 @@ plugins:
   # - jekyll-twitter-plugin
 
 # Build
-exclude: ["Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
+exclude: ["LICENSE", "README.md"]
 
 callouts:
   highlight:
