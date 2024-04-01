@@ -9,6 +9,8 @@ La colección de los discos trascendentales de mi vida. Por orden aleatorio (y d
 
 #### Pequeña Orquesta Reincidentes - Miguita de Pan
 
+{% youtube "https://www.youtube.com/watch?v=Qxd-4syOfko&list=PLOeD7j49Er0w2pKEorDrwWNwPf-ajTGpd" %}
+
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0zEunERfRIfFQqhNB1Htkf?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 #### Lisandro Aristimuño - Ese asunto de la ventana
@@ -178,4 +180,3 @@ La colección de los discos trascendentales de mi vida. Por orden aleatorio (y d
 #### Los Cuentos de la Buena Pipa - Así gritó el dictador
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/5dXekqMn3dwRqzNeyGQ9nH?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-

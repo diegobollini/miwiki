@@ -14,6 +14,8 @@ favicon_ico: "assets/images/favicon.ico"
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "./assets/images/favicon.ico"
 
-# plugins:
-# - jekyll-sitemap
-# - github-pages
+plugins:
+  # - jekyll-sitemap
+  # - github-pages
+  - jekyll-youtube
+  # - jekyll-twitter-plugin
