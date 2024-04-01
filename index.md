@@ -17,4 +17,6 @@ Además, paso mucho tiempo en internet tanto para "consumo personal" como para l
 
 ## Repositorio
 
+{: .highlight }
+
 En este mismo [repositorio](https://github.com/diegobollini/miwiki){:target="\_blank"}, además de los contenidos mismos del sitio, documento el proceso que pasé para implementar esto (github actions & page, jekyll, just_the_docs...).

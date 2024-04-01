@@ -3,6 +3,9 @@ description: Laboratorio, Wiki y Jardín Digital
 theme: just-the-docs
 
 url: https://wiki.bolli.ar
+repository: diegobollini/miwiki
+
+permalink: pretty
 
 # source: /docs
 
@@ -10,7 +13,7 @@ aux_links:
   # Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 # Set a path/url to a favicon that will be displayed by the browser
-favicon_ico: "/assets/images/favicon.ico"
+favicon_ico: "/assets/images/avatar.svg"
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "./assets/images/favicon.ico"
 
@@ -19,3 +22,49 @@ plugins:
   # - github-pages
   - jekyll-youtube
   # - jekyll-twitter-plugin
+
+# Build
+exclude: ["Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
+
+callouts:
+  highlight:
+    title: Relevante
+    color: yellow
+    opacity: 0.9
+  important:
+    title: Important
+    color: blue
+  new:
+    title: New
+    color: green
+  note:
+    title: Note
+    color: purple
+  warning:
+    title: Warning
+    color: red
+
+# For copy button on code
+enable_copy_code_button: true
+
+# Enable or disable heading anchors
+heading_anchors: true
+
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: true
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Para arriba ↑"
+
+footer_content: 'Sin copyright ~ 2024-(...) <a href="https://bolli.ar" target=_blank>Diego Bollini.</a>'
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+  # ignore:
+  #   envs: all
