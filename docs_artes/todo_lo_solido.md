@@ -15,8 +15,8 @@ Para hacer música en algún momento se necesitó al músico, a la mejor melodí
 
 Se ha establecido un patrón de producción que apunta a instalar por un determinado período de tiempo un solo arte, una sola imagen plástica, una sola música, en definitiva, una sola canción que, lejos de resultar democratizante, resulta anuladora de identidades.
 
-Que no se confunda lo fundamental con lo accesorio. Un disco son canciones; un disco es música. Lo demás es agua que se evapora en el aire."
+**Que no se confunda lo fundamental con lo accesorio. Un disco son canciones; un disco es música. Lo demás es agua que se evapora en el aire.**"
 
 _Gabo Ferro, tapa del disco Tódo lo sólido se desvanece en el aire_
 
-![image](../assets/images/gabo_todo-lo-solido.jpeg)
+[![image](../assets/images/gabo_todo-lo-solido.jpeg)](https://youtu.be/m04hKq9DETw?feature=shared){:target="\_blank"}
