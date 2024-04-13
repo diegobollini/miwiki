@@ -29,7 +29,7 @@ LOCAL_BACKUP_DIR="/home/diego/proyectos"
 
 # Nombre del archivo de respaldo
 
-BACKUP*FILENAME="respaldo*${DB_NAME}_$(date +'%Y%m%d\_%H%M%S').tar.gz"
+BACKUP_FILENAME="respaldo_${DB_NAME}_$(date +'%Y%m%d_%H%M%S').tar.gz"
 
 echo "Iniciando respaldo..."
 
@@ -37,10 +37,10 @@ echo "Iniciando respaldo..."
 
 # GRANT PROCESS ON _._ TO 'lacolifatadbuser'@'localhost';
 
-ssh -i $SSH_KEY -T -p $SSH_PORT $SSH_USER@$SSH_HOST <<EOF
+ssh -i "$SSH_KEY" -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" <<EOF
 echo "Haciendo dump de la base de datos..."
-mkdir -p $BACKUP_DIR
-  mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME > $BACKUP_DIR/$DB_NAME.sql
+mkdir -p "$BACKUP_DIR"
+mysqldump -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" > "$BACKUP_DIR/$DB_NAME.sql"
 
 echo "Copiando el sitio web..."
 cp -r $SITE_PATH $BACKUP_DIR/
@@ -55,11 +55,11 @@ EOF
 # Descargar el archivo de respaldo localmente
 
 echo "Descargando el archivo de respaldo..."
-scp -i $SSH_KEY -P $SSH_PORT $SSH_USER@$SSH_HOST:$BACKUP_DIR/$BACKUP_FILENAME $LOCAL_BACKUP_DIR
+scp -i "$SSH_KEY" -P "$SSH_PORT" "$SSH_USER@$SSH_HOST:$BACKUP_DIR/$BACKUP_FILENAME" "$LOCAL_BACKUP_DIR"
 
 # Eliminar el archivo de respaldo en el servidor (opcional)
 
-ssh -i $SSH_KEY -p $SSH_PORT $SSH_USER@$SSH_HOST "rm -rf $BACKUP_DIR"
+ssh -i "$SSH_KEY" -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "rm -rf $BACKUP_DIR"
 
 # Notificar la finalización
 
