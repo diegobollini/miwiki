@@ -11,7 +11,6 @@ Serie de links, recursos y fix rápidos para algunas cuestiones recurrentes en L
 
 - [Súper Chuleta](https://docs.google.com/document/d/1tUwaR-53FSaaDI70cHm8VW1Dy8gRJcgORbSjhcTxXZ8)
 - [The Linux Command Handbook](https://www.freecodecamp.org/news/the-linux-commands-handbook)
-- [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
 - [30 Linux System Monitoring Tools](https://www.cyberciti.biz/tips/top-linux-monitoring-tools.html)
 - [Learn the ways of Linux-fu](https://linuxjourney.com)
 - [40 Linux Server Hardening Security Tips](https://www.cyberciti.biz/tips/linux-security.html)
@@ -22,14 +21,14 @@ Serie de links, recursos y fix rápidos para algunas cuestiones recurrentes en L
 
 - [Duplicati - Free backup software](https://www.duplicati.com)
 
+### Virtualbox: install guest additions on Ubuntu 22.04 LTS Jammy Jellyfish
 
-### Virtualbox: install guest additions on Ubuntu 20.04 LTS Focal Fossa
-
-- [Link](https://linuxconfig.org/virtualbox-install-guest-additions-on-ubuntu-20-04-lts-focal-fossa)
+- [Link](https://linuxconfig.org/virtualbox-install-guest-additions-on-ubuntu-22-04-lts-jammy-jellyfish)
 
 ```bash
 $ sudo add-apt-repository multiverse
-$ sudo apt install virtualbox-guest-dkms virtualbox-guest-x11
+$ sudo apt update
+$ sudo apt install virtualbox-guest-utils virtualbox-guest-x11
 All done. Reboot your virtual machine:
 $ sudo reboot
 Confirm the Virtualbox guest additions:
@@ -88,9 +87,22 @@ $ sudo apt-get update && sudo apt-get install vagrant
 ```
 
 ```bash
-# Running VM in VirtualBox running Ubuntu 18.04 LTS 64-bit
-$ vagrant init hashicorp/bionic64
+# Running VM in VirtualBox running Ubuntu 22.04 LTS 64-bit
+$ vagrant init ubuntu/jammy64
 $ vagrant up
 $ vagrant ssh
 $ vagrant destroy
+```
+
+### Stremio + Docker
+
+Por lo pronto fue el método que me funcionó, evitando dependencias y otros manejes:
+
+```bash
+$ docker run --rm -d -p 11470:11470 -p 12470:12470 -e NO_CORS=1 stremio/server:latest
+# URL > localhost:11470
+# En el buscador de Stremio, agregar plugin de Torrentio: stremio://torrentio.strem.fun/lite/manifest.json
+# Alias en .zshrc
+# alias stremio-play='docker run --rm -d -p 11470:11470 -p 12470:12470 -e NO_CORS=1 stremio/server:latest'
+$ stremio-play
 ```
