@@ -8,6 +8,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  language: es
   favicon: assets/images/avatar.svg
   logo: assets/images/avatar.svg
   palette:
@@ -27,6 +28,13 @@ theme:
     - search.suggest
     - content.action.edit
     - content.code.copy
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      type: date
+      locale: es
+      fallback_to_build_date: true
 
 extra_javascript:
   - https://platform.twitter.com/widgets.js
@@ -72,7 +80,6 @@ nav:
       - Docker - Curso introductorio Acamica: sre/docker-introduccion-acamica.md
       - Docker - Implementar Wordpress: sre/docker-wordpress-deploy.md
       - Git - SSOT: sre/git-ssot.md
-      - Git - Prácticas curso CoderHouse: sre/git-practicas-coderhouse.md
       - Git - Usando la línea de comandos: sre/git-linea-comandos.md
       - Git - Curso básico Acamica: sre/git-acamica.md
       - Kubernetes - manual: sre/kubernetes-manual.md

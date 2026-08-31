@@ -274,8 +274,6 @@ You can now view youtube-app in the browser.
 
 Entonces desde el navegador: <http://165.227.69.98:3000/> !!!
 
-### Deploy en Digital Ocean: wordpress con docker-compose
-
 ## Demo - Workflow
 
 - developing a JavaScript app + mongo DB
