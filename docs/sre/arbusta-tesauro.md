@@ -1,6 +1,6 @@
 # Proyecto Tesauro
 
-Para un posible proyecto con un cliente (Arbusta) se necesitaba implementar un tesauro\*, así que buscamos en internet y descubrimos un proyecto open source argentino [TemaTres-Vocabulary-Server].
+Para un posible proyecto con un cliente (Arbusta) se necesitaba implementar un tesauro\*, así que buscamos en internet y descubrimos un proyecto open source argentino [TemaTres-Vocabulary-Server](https://github.com/tematres/TemaTres-Vocabulary-Server).
 
 _\* instrumento de control terminológico que permite convertir el lenguaje natural de los documentos en un lenguaje controlado, ya que representa, de manera unívoca, el contenido de estos, con el fin de servir tanto para la indización, como para la recuperación de los documentos._
 

@@ -427,13 +427,12 @@ nginx-deployment-mnb95   1/1     Running   0          25s
   - kind: StatefulSet
   - volumeClaimTemplates
 
-````bash
+```bash
 $ kubectl apply -f 05-statefulset.yaml
 statefulset.apps/my-csi-app-set created
 $ kubectl describe pod my-csi-app-set-0
 # Para ver volumenes
 $ kubectl get pvc
-```bash
+```
 
 https://youtu.be/DCoBcpOA7W4?t=2808
-````
