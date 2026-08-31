@@ -28,6 +28,10 @@ theme:
     - content.action.edit
     - content.code.copy
 
+extra_javascript:
+  - https://platform.twitter.com/widgets.js
+  - assets/js/twitter-embed.js
+
 markdown_extensions:
   - admonition
   - pymdownx.details
