@@ -1,0 +1,79 @@
+site_name: Mi Wiki
+site_description: Laboratorio, Wiki y Jardín Digital
+site_url: https://wiki.bolli.ar
+
+repo_url: https://github.com/diegobollini/miwiki
+repo_name: diegobollini/miwiki
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  favicon: assets/images/avatar.svg
+  logo: assets/images/avatar.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.instant
+    - navigation.top
+    - search.suggest
+    - content.action.edit
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: index.md
+  - Artes:
+      - artes/index.md
+      - Creative Code: artes/creative_code.md
+      - Discos: artes/discos.md
+      - Falopitas con IA: artes/falopitas-ia.md
+      - Todo lo sólido...: artes/todo-lo-solido.md
+  - Cosas de Internet:
+      - cosas-internet/index.md
+      - Tuits de Fotos: cosas-internet/tuits-fotos.md
+      - Tuits remixados: cosas-internet/tuits-mix.md
+      - Tuits Random: cosas-internet/tuits-random.md
+  - La Colifata:
+      - colifata/index.md
+      - Script - Upload a Dropbox: colifata/backup-upload-dropbox.md
+      - Server - Restore & Upgrade a Ubuntu 22.04: colifata/upgrade-server-wp-mysql-nginx-php.md
+      - Bash script - Backup WP + SQL & Descarga: colifata/template-backup-wordpress.md
+  - Linux:
+      - linux/index.md
+      - Setup server (artesanal): linux/setup-server-artesanal.md
+      - Speedtest script: linux/medidor-velocidad-internet.md
+      - Setup notebook (artesanal): linux/setup-notebook-artesanal.md
+      - Setup notebook (script): linux/setup-notebook-script.md
+      - Troubleshooting: linux/troubleshooting.md
+  - SRE & SysAdmin:
+      - sre/index.md
+      - Ansible - manual: sre/ansible-manual.md
+      - Docker - SSOT: sre/docker-ssot.md
+      - Docker - Curso introductorio Acamica: sre/docker-introduccion-acamica.md
+      - Docker - Implementar Wordpress: sre/docker-wordpress-deploy.md
+      - Git - SSOT: sre/git-ssot.md
+      - Git - Prácticas curso CoderHouse: sre/git-practicas-coderhouse.md
+      - Git - Usando la línea de comandos: sre/git-linea-comandos.md
+      - Git - Curso básico Acamica: sre/git-acamica.md
+      - Kubernetes - manual: sre/kubernetes-manual.md
+      - MySQL - Curso introductorio (Acamica): sre/mysql-acamica-intro.md
+      - Arbusta Tesauro: sre/arbusta-tesauro.md
+      - Implementando Cockpit: sre/cockpit-server-monitor.md
+
+not_in_nav: |
+  404.md

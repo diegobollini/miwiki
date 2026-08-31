@@ -2,96 +2,49 @@
 
 ## Links
 
-- [Jekyll RB](https://jekyllrb.com/)
-- [Just The Docs](https://just-the-docs.com/)
+- [MkDocs](https://www.mkdocs.org/)
+- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
+- [Cloudflare Pages](https://pages.cloudflare.com/)
 
 ## Intro
 
-Puede no ser el abordaje más práctico pero me pareció un proyecto curioso para implementar. Se trata básicamente de una página usando Jekyll, una gema de ruby, que convierte archivos de texto (markdown) en websites estáticos y blogs.
+Página estática generada con [MkDocs](https://www.mkdocs.org/) y el tema [Material](https://squidfunk.github.io/mkdocs-material/), a partir de archivos markdown. El deploy lo hace [Cloudflare Pages](https://pages.cloudflare.com/): cada push a `main` dispara un build y publicación automáticos, sin workflows de GitHub Actions que mantener.
 
-## Jekyll - Local
+_Nota: el sitio corrió antes en Jekyll + GitHub Pages. Se migró a este stack para simplificar el deploy (ver historial de commits)._
 
-Este es el camino largo, que permite servir el sitio localmente. Así se pueden ver los cambios, páginas agregadas, etc. sin la necesidad de construir el sitio en Github Pages. Es práctico para empezar y entender la dinámica y luego se puede limpiar la instalación.
+## Local
 
-Instalar ruby y dependencias:
-
-```bash
-$ sudo apt-get install ruby-full build-essential
-# Agregar en:
-$ code ~/.zshrc
-# Install Ruby Gems to ~/gems
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
-$ source ~/.zshrc
-```
-
-Instalar jekyll, bundler y demás gemas:
+Instalar dependencias (requiere Python 3):
 
 ```bash
-$ gem install jekyll bundler
-$ ruby -v
-ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [x86_64-linux-gnu]
-$ gem -v
-3.3.15
-$ bundler -v
-Bundler version 2.5.7
-$ jekyll -v
-jekyll 4.3.3
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+$ pip install -r requirements.txt
 ```
+
+Levantar el sitio en local, con recarga automática al guardar cambios:
 
 ```bash
-# Instalar gemas necesarias (ver Gemfile)
-$ bundle install
-# Eliminar gemas:
-$ bundle clean --force
+$ mkdocs serve
+# http://127.0.0.1:8000
 ```
 
-### Just The Docs
-
-_"A modern, highly customizable, and responsive Jekyll theme for documentation with built-in search. Easily hosted on GitHub Pages with few dependencies"_.
-
-```ruby
-# Agregar en Gemfile:
-gem "just-the-docs"
-```
-
-```yml
-# Agregar en _config.yml:
-theme: just-the-docs
-```
-
-### Serve
-
-Una vez que está todo instalado (además de haber agregado los docs .md) podemos levantar localmente el sitio:
+Buildear el sitio estático (queda en `./site`, no se versiona):
 
 ```bash
-$ bundle exec jekyll serve
-Configuration file: /home/diego/proyectos/miwiki/_config.yml
-            Source: /home/diego/proyectos/miwiki
-       Destination: /home/diego/proyectos/miwiki/_site
- Auto-regeneration: enabled for '/home/diego/proyectos/miwiki'
-    Server address: http://127.0.0.1:4000
+$ mkdocs build
 ```
 
-![image](/assets/images/wiki_front.png)
+## Contenido
 
-## Jekyll - GitHub Pages
+Cada sección vive en una carpeta bajo `docs/` (`artes/`, `linux/`, `sre/`, etc.), con su propio `index.md`. El menú de navegación se define a mano en [`mkdocs.yml`](./mkdocs.yml) — para agregar una página nueva: crear el archivo `.md` en la carpeta correspondiente y sumar la entrada en el `nav` de `mkdocs.yml`.
 
-Agregar en .github `dependabot.yml` y en .github/workflows `ci.yml` y `pages.yml`. Esto es independiente de la instalación local, es decir se puede deployar el sitio sin instalar jekyll y gems.  
-Cuando se haga algún commit se disparan las acciones que construyen el artefacto y lo deployan en Pages.
+## Deploy
 
-#### Jekyll Youtube
+El deploy corre en [Cloudflare Pages](https://pages.cloudflare.com/), conectado directamente al repositorio de GitHub (proyecto configurado desde el dashboard de Cloudflare, no desde este repo):
 
-Este [plugin](https://github.com/dommmel/jekyll-youtube) de Jekyll agrega una etiqueta markdown que toma una URL de Youtube y genera el fragmento HTML (responsive) correspondiente para visualizar el video en la página. Es decir, permite agregar videos con algo tan simple como `{% youtube "https://youtu.be/m04hKq9DETw" %}`.
+- **Build command**: `pip install -r requirements.txt && mkdocs build`
+- **Build output directory**: `site`
+- **Rama de producción**: `main`
 
-Para usarlo, agregar al Gemfile y al config:
-
-```ruby
-group :jekyll_plugins do
-    gem "jekyll-youtube"
-end
-```
-
-```yml
-plugins: [jekyll-youtube]
-```
+Cada push a `main` buildea y publica solo; cada Pull Request genera un preview aparte. El dominio propio (`wiki.bolli.ar`) se configura como Custom Domain del proyecto en el dashboard de Cloudflare Pages, apuntando el DNS del dominio a Cloudflare.
