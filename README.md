@@ -4,13 +4,13 @@
 
 - [MkDocs](https://www.mkdocs.org/)
 - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-- [Cloudflare Pages](https://pages.cloudflare.com/)
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 
 ## Intro
 
-Página estática generada con [MkDocs](https://www.mkdocs.org/) y el tema [Material](https://squidfunk.github.io/mkdocs-material/), a partir de archivos markdown. El deploy lo hace [Cloudflare Pages](https://pages.cloudflare.com/): cada push a `main` dispara un build y publicación automáticos, sin workflows de GitHub Actions que mantener.
+Página estática generada con [MkDocs](https://www.mkdocs.org/) y el tema [Material](https://squidfunk.github.io/mkdocs-material/), a partir de archivos markdown. El deploy lo hace un [Cloudflare Worker de assets estáticos](https://developers.cloudflare.com/workers/static-assets/), conectado directamente al repo de GitHub: cada push a `main` dispara un build y publicación automáticos, sin workflows de GitHub Actions que mantener.
 
-_Nota: el sitio corrió antes en Jekyll + GitHub Pages. Se migró a este stack para simplificar el deploy (ver historial de commits)._
+_Nota: el sitio corrió antes en Jekyll + GitHub Pages. Se migró a este stack para simplificar el deploy (ver historial de commits). GitHub Pages quedó desactivado en la configuración del repo._
 
 ## Local
 
@@ -41,10 +41,12 @@ Cada sección vive en una carpeta bajo `docs/` (`artes/`, `linux/`, `sre/`, etc.
 
 ## Deploy
 
-El deploy corre en [Cloudflare Pages](https://pages.cloudflare.com/), conectado directamente al repositorio de GitHub (proyecto configurado desde el dashboard de Cloudflare, no desde este repo):
+El proyecto en Cloudflare (**Workers & Pages → miwiki**) está conectado por GitHub App al repo `diegobollini/miwiki`. Build y deploy corren ahí, no en este repo:
 
-- **Build command**: `pip install -r requirements.txt && mkdocs build`
-- **Build output directory**: `site`
+- **Build command** (configurado en el dashboard, Settings → Build): `pip install -r requirements.txt && mkdocs build`
+- **Deploy command**: `npx wrangler deploy` — usa [`wrangler.toml`](./wrangler.toml), que apunta los assets estáticos a `./site` (la salida de `mkdocs build`)
 - **Rama de producción**: `main`
 
-Cada push a `main` buildea y publica solo; cada Pull Request genera un preview aparte. El dominio propio (`wiki.bolli.ar`) se configura como Custom Domain del proyecto en el dashboard de Cloudflare Pages, apuntando el DNS del dominio a Cloudflare.
+Cada push a `main` buildea y publica solo. El dominio propio (`wiki.bolli.ar`) se agrega como Custom Domain en la pestaña **Domains** del proyecto — como `bolli.ar` ya vive en la misma cuenta de Cloudflare, queda resuelto sin tocar DNS a mano.
+
+Si en algún momento el deploy automático deja de dispararse con un push, lo primero para chequear es que la GitHub App "Cloudflare Workers & Pages" siga teniendo acceso al repo en [github.com/settings/installations](https://github.com/settings/installations) — si el repo no está en la lista de repos permitidos, los pushes no le llegan a Cloudflare.
