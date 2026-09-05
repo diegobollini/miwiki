@@ -12,28 +12,26 @@
 
 ## Introducción
 
-- Inventarios
-  - generalmente .yaml
-  - Path: `bash/etc/ansible/hosts`
-    - personalizar con `i <path>`
-- Comandos adhoc
-  - no reutilizables, `/usr/bin`
-- Playbooks
-- Módulos (plugins)
-- Varibles, condicionales, bucles
-- Roles
-- [Galaxy (biblioteca de roles)](https://galaxy.ansible.com/)
+Conceptos base:
+
+- **Inventario**: lista de hosts a gestionar, generalmente en YAML. Por defecto vive en `/etc/ansible/hosts`; se puede usar otro archivo con `-i <path>`.
+- **Comandos ad-hoc**: ejecutan una tarea puntual con el comando `ansible`, sin guardarse en un playbook — útiles para chequeos rápidos, no para tareas reutilizables.
+- **Playbooks**: archivos YAML con una o más tareas, pensados para reutilizarse.
+- **Módulos**: unidades de código que Ansible ejecuta en el host remoto (instalar un paquete, copiar un archivo, etc.). Los **plugins** extienden el comportamiento del propio Ansible (conexión, filtros, formato de salida, etc.) — son cosas distintas aunque suelen mencionarse juntas.
+- **Variables, condicionales, bucles**: para parametrizar playbooks, igual que en cualquier lenguaje de scripting.
+- **Roles**: forma de empaquetar playbooks, variables y archivos relacionados en una estructura reutilizable entre proyectos.
+- [Galaxy](https://galaxy.ansible.com/): repositorio público de roles y colecciones ya hechos.
 
 ## Tasks & Plays
 
-- Plays > conjunto ordenado de tareas que se ejecutan en las selecciones del host desde el archivo de inventario
-- Tareas > elementos que llaman a los módulos de Ansible y que conforman un play, y se ejecutan en el mismo orden en que se escribieron.
-- Controladores > para ejecutar una tarea específica luego de que se haya realizado un cambio en el sistema (Tasks)
-- Variables > modificaciones, diferencias, versiones, rutas, etc.
-- Funciones > playbook especial completamente autónomo y portátil que incluye tareas, variables, plantillas de configuración y otros archivos de soporte
-- Colecciones > distribución (playbooks + funciones + módulos + plugins)
-- Gestión de la configuración > almacenar el estado actual de los sistemas y ayudar a mantenerlo
-- Canal de implementación > en general compilación, prueba e implementación
+- **Play**: conjunto ordenado de tareas que se ejecuta sobre la selección de hosts definida en el inventario.
+- **Task (tarea)**: llama a un módulo de Ansible; las tareas de un play se ejecutan en el orden en que están escritas.
+- **Handler**: tarea especial que se dispara solo cuando otra tarea produjo un cambio en el sistema (por ejemplo, reiniciar un servicio después de modificar su configuración).
+- **Variables**: datos que parametrizan un playbook (versiones, rutas, diferencias entre entornos, etc.).
+- **Role**: playbook autónomo y portátil que empaqueta tareas, variables, plantillas y otros archivos de soporte, pensado para reutilizarse entre proyectos.
+- **Colección**: paquete distribuible que agrupa playbooks, roles, módulos y plugins.
+- **Gestión de la configuración**: mantener y verificar el estado deseado de los sistemas a lo largo del tiempo, en vez de configurarlos a mano una sola vez.
+- **Pipeline de implementación**: el flujo típico de build, test y deploy donde Ansible suele encajar como paso de configuración/deploy.
 
 ## Instalación
 
@@ -119,7 +117,7 @@ $ ansible -i inventory testservers -m ping -u diego
 $ code ansible.cfg
 [defaults]
 INVENTORY = inventory
-# Todo el grupo testservers, m = modelos (-m command por default)
+# Todo el grupo testservers, -m = módulo a usar (por defecto: command)
 $ ansible testservers -m ping -u diego
 # Comandos adhoc, a = argumentos
 $ ansible testservers -a "free -h" -u diego
