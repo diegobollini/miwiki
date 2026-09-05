@@ -80,9 +80,7 @@ nav:
       - Docker - SSOT: sre/docker-ssot.md
       - Docker - Curso introductorio Acamica: sre/docker-introduccion-acamica.md
       - Docker - Implementar Wordpress: sre/docker-wordpress-deploy.md
-      - Git - SSOT: sre/git-ssot.md
-      - Git - Usando la línea de comandos: sre/git-linea-comandos.md
-      - Git - Curso básico Acamica: sre/git-acamica.md
+      - Git: sre/git-ssot.md
       - Kubernetes - manual: sre/kubernetes-manual.md
       - MySQL - Curso introductorio (Acamica): sre/mysql-acamica-intro.md
       - Arbusta Tesauro: sre/arbusta-tesauro.md

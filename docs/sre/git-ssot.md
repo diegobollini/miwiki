@@ -1,15 +1,25 @@
-# Git Single Source of Truth
+# Git
 
-La idea es sistematizar toda la información, aprendizajes, pruebas acerca de git (y relacionado) en este único archivo. Quizás se actualice, quizás no.
+_Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia y la confiabilidad del mantenimiento de versiones de aplicaciones cuando estas tienen un gran número de archivos de código fuente._
 
-- [Video](https://www.youtube.com/watch?v=kEPF-MWGq1w)
-- [Learning Git Branching](https://learngitbranching.js.org/)
+- [Sitio oficial](https://git-scm.com/) / [Documentación](https://git-scm.com/docs/)
+- [Video: PeladoNerd](https://www.youtube.com/watch?v=kEPF-MWGq1w)
+- [Learning Git Branching](https://learngitbranching.js.org/) — app interactiva para practicar branches, merge y rebase visualmente
 
-## Versión, setup inicial
+## Glosario básico
+
+- **Repositorio**: carpeta con los archivos del proyecto y su historial (`.git/`)
+- **Commit**: conjunto de cambios que se persiste en el historial
+- **Staging**: área intermedia donde se preparan los cambios antes de commitear
+- **Branch**: línea de desarrollo independiente
+- **HEAD**: puntero al commit sobre el que se está trabajando
+- **Remoto**: copia del repositorio alojada en otro lado (GitHub, GitLab, etc.), generalmente llamada `origin`
+
+## Setup inicial
 
 ```bash
-$ git version
-git version 2.25.0
+$ git --version
+git version 2.39.2
 $ git config --global user.name "diegobollini"
 $ git config --global user.email "diego.bollini@protonmail.com"
 $ git config --list
@@ -17,350 +27,133 @@ user.name=diegobollini
 user.email=diego.bollini@protonmail.com
 ```
 
-## Para lanzar el repositorio y definir qué no se va a trackear
+## Iniciar un repositorio
 
 ```bash
-$ sudo git init
-Inicializado repositorio Git vacío en /home/diego_manjaro/mirepositorio/.git/
-$ touch privado.txt #por ejemplo, para cargar credenciales
-$ nano .gitignore #agrego privado.txt para que git lo ignore, pueden ser carpetas, extensiones, etc.
-```
-
-## Status
-
-```bash
+$ git init
+Inicializado repositorio Git vacío en /home/diego/mirepositorio/.git/
+$ touch privado.txt # por ejemplo, para cargar credenciales
+$ nano .gitignore # agrego privado.txt para que git lo ignore (pueden ser carpetas, extensiones, etc.)
 $ git status
 En la rama master
 No hay commits todavía
 Archivos sin seguimiento:
     (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
     .gitignore
-    no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
 ```
 
-## Para agregar o quitar del trackeo
+## Agregar, quitar del tracking y commitear
 
 ```bash
-$ git add -A
-$ git status
-Cambios a ser confirmados:
-    (usa "git rm --cached <archivo>..." para sacar del área de stage)
-    nuevo archivo:  .gitignore
-    nuevo archivo:  Tutorial: Usando la linea de comandos en Git
-$ git rm --cached [archivo o carpeta] #para que git no trackee
-```
-
-```bash
-$ sudo git commit -m "Empezando mi primer repositorio posta desde la línea de comandos"
-[master (commit-raíz) 4554c53] Empezando mi primer repositorio posta desde la línea de comandos
+$ git add archivo        # un archivo puntual
+$ git add .              # todos los archivos del directorio
+$ git add -A             # todos los archivos del repo
+$ git rm --cached [archivo o carpeta] # para que git deje de trackearlo (sin borrarlo del disco)
+$ git commit -m "Empezando mi primer repositorio desde la línea de comandos"
+[master (commit-raíz) 4554c53] Empezando mi primer repositorio desde la línea de comandos
  9 files changed, 191 insertions(+)
- $ git log
- commit 4554c534f6aef4d722ebbd4021ee91ab08df0679 (HEAD -> master)
- Author: Diego Bollini <diego.bollini@protonmail.com>
- Date:   Sun Feb 9 20:04:21 2020 -0300
-
-     Empezando mi primer repositorio posta desde la línea de comandos
 ```
 
-## Para trabajar con repositorios ya existentes
+## Ver el historial y las diferencias
 
 ```bash
-$ git clone https://.....
-$ nano index.html #suponiendo que ese archivo exista, lo edito
-# ver archivo local que tuvo modificaciones
-$ git status
-$ git diff #va a mostrar las diferencias entre el archivo del repositorio y mi versión local
+$ git log
+$ git log --oneline              # versión resumida, solo títulos de commit
+4c49bd6 (HEAD -> master, origin/master, origin/HEAD) nuevas notas secciones finales
+de60968 revisión estilo md
+59af6bf update de notas
+$ git log -- <archivo>           # historial de un archivo puntual
+$ git log -p                     # incluye el diff de cada commit
+$ git diff                       # cambios sin stagear
+```
+
+Para descartar cambios locales:
+
+```bash
+$ git checkout -- archivo   # deshace los cambios de un archivo puntual
+$ git checkout .            # deshace todos los cambios sin stagear
+```
+
+## Trabajar con un repositorio existente
+
+```bash
+$ git clone https://github.com/usuario/repo.git
+$ nano index.html                # edito un archivo existente
+$ git status                     # muestra el archivo modificado
+$ git diff                       # diferencias contra la versión del repo
 $ git add index.html
 $ git commit -m "Agregando unas líneas"
+$ git pull origin master         # bajar la última versión, siempre al arrancar a trabajar
+$ git push origin master         # subir los cambios
 ```
 
-## Actualizar repositorio local y web
+## Branches
+
+Para no pisarse al trabajar entre varias personas a la vez:
 
 ```bash
-# para descargar la última versión, SIEMPRE que se arranque con un proyecto
-$ git pull origin master
-$ git push origin master #para subir / actualizar
-```
-
-## Branch (para no "pisarse" al trabajar entre varias personas a la vez)
-
-```bash
-$ git branch nuevafeature #crea la rama nuevafeature
-$ git checkout nuevafeature #para cambiar a la nueva rama
+$ git branch nuevafeature       # crea la rama
+$ git checkout nuevafeature     # cambia a la rama
 Cambiado a rama 'nuevafeature'
-$ git branch -a #para ver la lista de ramas
-$ git branch -d nuevafeature
-Eliminada la rama nuevafeature (era ec4ecca)..
+$ git branch -a                 # lista todas las ramas (incluye remotas)
+$ git branch -d nuevafeature    # borra la rama (falla si tiene cambios sin mergear)
+$ git branch -D nuevafeature    # borra la rama a la fuerza
 ```
 
-## Merge (crea un commit especial que tiene dos padres diferentes)
+Merge (crea un commit especial con dos padres, o hace fast-forward si no hubo divergencia):
 
 ```bash
-$ git push -u origin nuevafeature #para actualizar el repositorio master con los cambios que hice en mi rama
-$ git branch --merged
-* master
+$ git push -u origin nuevafeature   # publica la rama con los cambios propios
+$ git branch --merged               # qué ramas ya están mergeadas a la actual
+$ git checkout master
 $ git merge nuevafeature
-$ git push origin --delete nuevafeature
-```
-
-## Rebase (copia un conjunto de commits y los aplica sobre otros)
-
-```bash
-# desde otra rama, copiamos los commits a la "línea" de master
-$ git rebase master
-$ git rebase nuevafeature #desde master, al ser rama ancestra las iguala de nivel
-```
-
-## HEAD (el commit sobre el que estoy trabajando)
-
-```bash
-#HEAD siempre apunta al commit más reciente
-#detachear = adjuntar a commit y no a branch (HEAD -> master -> C1)
-$ git checkout [hash del commit] (HEAD -> C1)
-```
-
-## Referencias relativas
-
-```bash
-$ git log #para visualizar commits, se pueden identificar con una cantidad mínima (por ejemplo fed2 si el hash es fed2da64c0efc529...)
-#Moverse un commit atrás con ^
-#Moverse una cantidad de commits atrás con ~<num>
-$ git checkout master^ #se posiciona en el commit padre del que estoy posicionado
-$ git checkout master^^ #dos niveles "hacia arriba"
-```
-
-# Prácticas con git y repositorios
-
-## Comprobando versión
-
-```bash
-➜  ~ git version
-git version 2.30.0
-```
-
-## Comprobando variables y configuraciones de entorno
-
-```bash
-➜  ~ git config --list
-user.name=Diego Bollini
-user.email=diego.bollini@protonmail.com
-➜  ~ git config user.name
-Diego Bollini
-➜  ~ git config user.email
-diego.bollini@protonmail.com
-```
-
-## Creando carpeta e iniciando repositorio
-
-```bash
-➜  ~ pwd
-/home/diego
-➜  ~ cd _desarrollo
-➜  _desarrollo pwd
-/home/diego/_desarrollo
-➜  _desarrollo mkdir repositorio_test
-➜  _desarrollo cd repositorio_test
-➜  repositorio_test git init
-Initialized empty Git repository in /home/diego/_desarrollo/repositorio_test/.git/
-➜  ~
-```
-
-## Creo archivo index.html + status
-
-```bash
-➜  ~ git status
-On branch main
-No commits yet
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	index.html
-nothing added to commit but untracked files present (use "git add" to track)
-```
-
-## De working directory a staging area
-
-```bash
-➜  ~ git add index.html # con git add . se agregan todos los archivos del directorio
-➜  ~ git status
-On branch main
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-	new file:   index.html
-```
-
-## De staging area al repositorio
-
-```bash
-➜  ~ git commit -m "Primer commit"
-[main (root-commit) 388b3ca] Primer commit
- 1 file changed, 12 insertions(+)
- create mode 100644 index.html
-➜  ~ git log
-commit 388b3caa77e0160cdf64e2980f89cf78f1092a80 (HEAD -> main)
-Author: Diego Bollini <diego.bollini@protonmail.com>
-Date:   Tue Feb 16 13:24:03 2021 -0300
-
-    Primer commit
-```
-
-## Ramas
-
-### Crear y moverse entre ramas
-
-```bash
-➜  ~ git branch nueva-rama
-➜  ~ git branch
-* main
-nueva-rama
-➜  ~ git checkout nueva-rama
-Switched to branch 'nueva-rama'
-➜  ~ git branch -l
-main
-* nueva-rama
-```
-
-### Eliminar ramas
-
-```bash
-➜  ~ git checkout main
-Switched to branch 'main'
-➜  ~ git branch -l
-* main
-nueva-rama
-➜  ~ git branch -D nueva-rama
-Deleted branch nueva-rama (was 388b3ca).
-➜  ~ git branch
-* main
-```
-
-## Práctica
-
-```bash
-➜  ~ git branch test_rama
-➜  ~ git checkout test_rama
-Switched to branch 'test_rama'
-➜  ~ git branch -l
-➜  ~ git status
-On branch test_rama
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   index.html
-no changes added to commit (use "git add" and/or "git commit -a")
-➜  ~ git add .
-➜  ~ git commit -m "Agregando h1 al html"
-[test_rama 2e10251] Agregando h1 al html
- 1 file changed, 1 insertion(+), 1 deletion(-)
-➜  ~ git status
-On branch test_rama
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   index.html
-
-no changes added to commit (use "git add" and/or "git commit -a")
-➜  ~ git add .
-➜  ~ git commit -m "Agregando h2 al html"
-[test_rama ab2a2ea] Agregando h2 al html
- 1 file changed, 1 insertion(+)
-➜  ~ git add .
-➜  ~ git commit -m "Agregando párrafo genérico"
-[test_rama 79678c1] Agregando párrafo genérico
- 1 file changed, 1 insertion(+)
-➜  ~ git log --oneline
-79678c1 (HEAD -> test_rama) Agregando párrafo genérico
-ab2a2ea Agregando h2 al html
-2e10251 Agregando h1 al html
-388b3ca (main) Primer commit
-➜  ~ git checkout ab2a2ea # Para moverme a un commit específico (ver que el párrafo del 3° commit no está visible en index.html)
-Note: switching to 'ab2a2ea'.
-...
-HEAD is now at ab2a2ea Agregando h2 al html
-➜  ~ git branch
-* (HEAD detached at ab2a2ea)
-main
-test_rama
-```
-
-### Mergeando ramas
-
-```bash
-➜  ~ git checkout main
-Previous HEAD position was ab2a2ea Agregando h2 al html
-Switched to branch 'main'
-➜  ~ git merge test_rama
 Updating 388b3ca..79678c1
 Fast-forward
  index.html | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
+$ git push origin --delete nuevafeature   # borrar la rama también en el remoto
 ```
 
-- el html debería estar completo e incluir los últimos cambios
+## Rebase
 
-## Repositorio cloud en GitLab
-
-### Creo el repositorio y lo clono
+Copia un conjunto de commits y los reaplica sobre otra base, en vez de generar un commit de merge:
 
 ```bash
-➜  ~ pwd
-/home/diego/_desarrollo
-➜  ~ git clone git@gitlab.com:diegobollini/aprendiendo-git.git
-➜  ~ cd aprendiendo_git/
-➜  ~ touch index.html
-➜  ~ git status
-➜  ~ git add .
-➜  ~ git commit -m "Primer commit local"
-➜  ~ git status
-➜  ~ git push #Para subir los cambios al repositorio cloud
+$ git rebase master        # desde otra rama, copia sus commits sobre la punta de master
+$ git rebase nuevafeature  # desde master, si nuevafeature es rama ancestra, las iguala de nivel
 ```
 
-### Ramas
+## HEAD y referencias relativas
 
 ```bash
-➜  ~ git branch nueva_rama
-➜  ~ git branch
-➜  ~ git checkout nueva_rama
-➜  ~ git branch -l
+# HEAD siempre apunta al commit más reciente de la rama activa
+# "detachear" = pasar a apuntar a un commit puntual en vez de a una rama
+$ git checkout [hash del commit]   # HEAD queda apuntando directo a ese commit
+$ git checkout master              # vuelve a apuntar a la rama, evita quedarse en detached HEAD
 ```
-
-- hice algunos cambios en el html
-
-- puede servir ayudarse con VSC que también permite gestionar git
 
 ```bash
-➜  ~ git log --oneline
-➜  ~ git checkout 124ce13 # Uno de los commits con cambios
-➜  ~ git branch
+$ git log   # los hashes se pueden abreviar con los primeros caracteres (ej: fed2 en vez de fed2da64c0efc529...)
+$ git checkout master^    # el commit padre del que estoy parado
+$ git checkout master^^   # dos commits "hacia atrás"
+$ git checkout master~3   # tres commits "hacia atrás"
 ```
 
-### Práctica - Listar commits
+## Repositorios remotos (GitHub, GitLab, etc.)
+
+Los comandos son los mismos sea cual sea el host:
 
 ```bash
-➜  ~ git branch rama_prueba
-➜  ~ git checkout rama_prueba
-➜  ~ git branch # OK
-# Hago cambios en el html
-➜  ~ git add .
-➜  ~ git commit -m "add h4 in html"
+$ git clone git@github.com:usuario/repo.git
+$ git remote add origin https://github.com/usuario/repo.git   # si el repo local todavía no tiene remoto
+$ git pull    # bajar cambios
+$ git push    # subir cambios
+$ git merge user/master && git pull   # para sumar los commits de otra persona a mi rama
 ```
 
-### Mergear ramas
+## Buenas prácticas
 
-```bash
-➜  ~ git checkout master
-➜  ~ git branch # OK
-➜  ~ git merge rama_prueba
-
-```
-
-### Eliminar rama
-
-```bash
-➜  ~ git checkout main
-➜  ~ git branch -l
-➜  ~ git branch -D nueva-rama
-➜  ~ git branch
-```
+- Commits periódicos y reducidos: reducen errores y son más fáciles de revisar y revertir
+- Buenas descripciones: primera línea como título corto, después un párrafo si hace falta más contexto
+- Commits atómicos: no mezclar distintas funcionalidades o cambios no relacionados en un mismo commit
+- No commitear trabajo a medio hacer (para eso están los branches, o `git stash`)
