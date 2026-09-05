@@ -76,6 +76,7 @@ nav:
       - sre/index.md
       - Ansible - manual: sre/ansible-manual.md
       - Mi Ansible: sre/mi-ansible.md
+      - Devbox Personal: sre/devbox-personal.md
       - Docker - SSOT: sre/docker-ssot.md
       - Docker - Curso introductorio Acamica: sre/docker-introduccion-acamica.md
       - Docker - Implementar Wordpress: sre/docker-wordpress-deploy.md
